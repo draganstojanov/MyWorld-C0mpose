@@ -79,7 +79,10 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil-compose:2.2.0")
 
-    //Lifrecycle
+    // Serialization
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
+    //Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
