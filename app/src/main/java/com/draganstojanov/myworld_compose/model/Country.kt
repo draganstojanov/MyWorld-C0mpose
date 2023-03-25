@@ -2,6 +2,7 @@ package com.draganstojanov.myworld_compose.model
 
 import kotlinx.serialization.SerialName
 
+@kotlinx.serialization.Serializable
 data class Country(
 
     val region: String? = null,
@@ -27,7 +28,7 @@ data class Country(
     val coatOfArms: CoatOfArms? = null,
 
     val maps: Maps? = null,
-    val latlng: List<Any?>? = null,
+    val latlng: List<Double?>? = null,
 
     val capital: List<String?>? = null,
     val capitalInfo: CapitalInfo? = null,

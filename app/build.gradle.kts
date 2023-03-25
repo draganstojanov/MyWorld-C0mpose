@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
 }
 
 @Suppress("UnstableApiUsage")
@@ -64,14 +65,16 @@ dependencies {
     val coroutinesVersion = "1.5.2"
     val hiltVersion = "2.45"
     val retrofitVersion = "2.9.0"
-    val roomVersion ="2.5.0"
+    val roomVersion = "2.5.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.activity:activity-compose:1.6.1")
+    implementation("androidx.preference:preference-ktx:1.2.0")
 
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     implementation("androidx.compose.material:material:1.3.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.4.0")
 
     //Material icons - use with caution!
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
@@ -80,11 +83,13 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.0")
 
     // Serialization
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     //Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+
 
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
@@ -94,18 +99,18 @@ dependencies {
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-  //  implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    //  implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
 
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9")
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9")
 
     // Room
-    implementation ("androidx.room:room-runtime:$roomVersion")
-    implementation ("androidx.room:room-ktx:$roomVersion")
-    kapt ("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
 
 //    testImplementation("junit:junit:4.13.2")

@@ -1,5 +1,5 @@
 package com.draganstojanov.myworld_compose.model
-
+@kotlinx.serialization.Serializable
 data class Currencies(
     val XOF: Currency? = null,
     val NZD: Currency? = null,
