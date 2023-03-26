@@ -29,7 +29,7 @@ class Prefs(private val context: Context) {
         return if (countries != null) Json.decodeFromString(countries) else emptyList()
     }
 
-    private fun saveLastTimestamp() {
+     fun saveLastTimestamp() {
         sharedPreferences.edit().putLong(PREF_LAST_TIMESTAMP, System.currentTimeMillis()).apply()
     }
 

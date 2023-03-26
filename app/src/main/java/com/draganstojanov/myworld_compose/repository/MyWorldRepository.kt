@@ -16,15 +16,14 @@ class MyWorldRepository @Inject constructor(
     suspend fun getAllCountries(): List<Country> {
 
         return if (prefs.lastTimestampCheck()) {
-
-            val response = networkCall { myWorldApi.getAllCountries() }
-
-            Log.d("ADF-1", response.toString())
-
-            when (response) {
+            when (val response = networkCall { myWorldApi.getAllCountries() }) {
                 is ResponseState.Success -> {
-                    val countries = (response.data) as List<Country>
-                    prefs.saveAllCountries(countries)
+                    val c = (response.data) as List<*>
+                    val countries = c.filterIsInstance<Country>().apply { if (size != c.size) return emptyList() }
+                    prefs.apply {
+                        saveAllCountries(countries)
+                        saveLastTimestamp()
+                    }
                     countries
                 }
                 is ResponseState.Error -> prefs.getAllCountries()

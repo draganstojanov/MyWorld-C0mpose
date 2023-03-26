@@ -32,7 +32,7 @@ data class Country(
 
     val capital: List<String?>? = null,
     val capitalInfo: CapitalInfo? = null,
-    val area: Long? = null,
+    val area: Double? = null,
     val population: Int? = null,
 
     val borders: List<String?>? = null,

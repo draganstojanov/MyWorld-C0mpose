@@ -51,9 +51,6 @@ data class Gini(
     @SerialName("2009")
     val gini2009: Double? = null,
 
-//    @SerialName("2018")
-//    val gini2008: Double? = null,
-
     @SerialName("2005")
     val gini2005: Double? = null,
 
