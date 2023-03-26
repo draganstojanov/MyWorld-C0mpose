@@ -60,16 +60,16 @@ android {
 
 dependencies {
 
-    val composeVersion = "1.2.0"
-    val lifecycleVersion = "2.6.0"
-    val coroutinesVersion = "1.5.2"
+    val composeVersion = "1.4.0"
+    val lifecycleVersion = "2.6.1"
+    val coroutinesVersion = "1.6.4"
     val hiltVersion = "2.45"
     val retrofitVersion = "2.9.0"
     val roomVersion = "2.5.0"
     val kotlinVersion = "1.8.10"
 
     implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.activity:activity-compose:1.6.1")
+    implementation("androidx.activity:activity-compose:1.7.0")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.navigation:navigation-compose:2.5.3")
 
@@ -79,7 +79,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.4.0")
 
     //Material icons - use with caution!
-    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.compose.material:material-icons-extended:1.3.1")
 
     // Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
@@ -88,7 +88,6 @@ dependencies {
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2"
 
     //Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
@@ -111,15 +110,15 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.2.0")
+    implementation("io.coil-kt:coil-compose:2.3.0")
 
 
-//    testImplementation("junit:junit:4.13.2")
-//    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-//    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-//    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
-//    debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
-//    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
 }
 
 kapt {

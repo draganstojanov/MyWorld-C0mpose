@@ -66,14 +66,6 @@ class MainViewModel @Inject constructor(private val repo: MyWorldRepository) : V
 
     }
 
-    fun setAllCountries() {
-
-        debugLog(msg = "setAllCountries()")
-
-        val fc = mutableListOf<Country>().also { it.addAll(countriesState.value) }
-        filteredCountryList.value = fc.toList()
-    }
-
     fun filterEvent(filter: FilterEvent) {
         val filteredList = mutableListOf<Country>()
 
@@ -83,7 +75,6 @@ class MainViewModel @Inject constructor(private val repo: MyWorldRepository) : V
             is FilterEvent.Region -> filteredList.addAll(countriesState.value.filter { it.region == filter.region })
             is FilterEvent.Subregion -> filteredList.addAll(countriesState.value.filter { it.subregion == filter.subregion })
             is FilterEvent.Country -> filteredList.addAll(countriesState.value.filter { it.equals(filter.country) })
-
             is FilterEvent.Search -> filteredList.addAll(countriesState.value.filter {
                 containsInName(filter.searchFor, it.name) || containsInNativeName(filter.searchFor, it.name?.nativeName)
             })
@@ -94,7 +85,6 @@ class MainViewModel @Inject constructor(private val repo: MyWorldRepository) : V
         debugLog(msg=filteredList.size)
 
     }
-
 
     private fun containsInName(searchFor: String, name: Name?): Boolean =
         name?.common?.contains(searchFor) == true || name?.official?.contains(searchFor) == true

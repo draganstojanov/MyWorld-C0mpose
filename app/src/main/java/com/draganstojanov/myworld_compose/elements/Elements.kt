@@ -1,4 +1,4 @@
-package com.draganstojanov.myworld_compose.widgets
+package com.draganstojanov.myworld_compose.elements
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.draganstojanov.myworld_compose.R
 
 @Composable
-fun SomethingWentWrongFUllScreen() {
+fun SomethingWentWrongFullScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

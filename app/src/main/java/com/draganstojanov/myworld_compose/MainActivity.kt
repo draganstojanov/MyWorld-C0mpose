@@ -26,6 +26,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyWorldComposeTheme {
-
+        MyWorldNavigation()
     }
 }

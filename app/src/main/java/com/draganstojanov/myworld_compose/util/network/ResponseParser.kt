@@ -16,14 +16,9 @@ open class ResponseParser {
                     else -> {
                         val errorBody = response.errorBody()
                         val errMsg = errorBody!!.byteStream().bufferedReader().use { it.readText() }
-
-                        Log.d("ADF-2", errMsg.toString())
-                        
                         ResponseState.Error(error = errMsg, code = response.code())
-                        // ResponseState.Error(error = Json.encodeToString(errorBody!!.charStream()), code = response.code())
                     }
                 }
-
             } catch (exc: Exception) {
                 ResponseState.Error(exc.localizedMessage)
             }
