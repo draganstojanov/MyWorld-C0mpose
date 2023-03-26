@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
 }
 
 @Suppress("UnstableApiUsage")
@@ -66,10 +66,12 @@ dependencies {
     val hiltVersion = "2.45"
     val retrofitVersion = "2.9.0"
     val roomVersion = "2.5.0"
+    val kotlinVersion = "1.8.10"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.activity:activity-compose:1.6.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation("androidx.navigation:navigation-compose:2.5.3")
 
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
@@ -79,27 +81,23 @@ dependencies {
     //Material icons - use with caution!
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
 
-    // Coil
-    implementation("io.coil-kt:coil-compose:2.2.0")
-
-    // Serialization
+    // Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-
-    //Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
-
+    implementation(kotlin("reflect"))
 
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2"
 
+    //Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    //  implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
 
     // Retrofit
@@ -111,6 +109,9 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.2.0")
 
 
 //    testImplementation("junit:junit:4.13.2")

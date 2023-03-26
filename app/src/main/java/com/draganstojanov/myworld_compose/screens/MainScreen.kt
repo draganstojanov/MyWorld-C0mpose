@@ -1,28 +1,44 @@
 package com.draganstojanov.myworld_compose.screens
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.draganstojanov.myworld_compose.R
+import com.draganstojanov.myworld_compose.util.eventModel.FilterEvent
+import com.draganstojanov.myworld_compose.util.navigation.NavScreens
 import com.draganstojanov.myworld_compose.viewModel.MainViewModel
-
+import com.draganstojanov.myworld_compose.widgets.SomethingWentWrongFUllScreen
 
 @Composable
-fun MainScreen() {
-    val viewModel: MainViewModel = viewModel()
+fun MainScreen(navController: NavHostController) {
+    val viewModel: MainViewModel = hiltViewModel()
     val countries = viewModel.countriesState.value
     if (countries.isNotEmpty()) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = countries[0].flag.toString(),//todo
-            fontSize = 24.sp,
-            color = Color.Blue
+        AllCountriesButton(
+            viewModel = viewModel,
+            navController = navController
         )
+    } else {
+        SomethingWentWrongFUllScreen()
     }
 
+}
+
+@Composable
+fun AllCountriesButton(
+    viewModel: MainViewModel,
+    navController: NavController
+) {
+    Button(onClick = {
+        viewModel.filterEvent(FilterEvent.All)
+        navController.navigate(NavScreens.CountryListScreen.name)
+    }) {
+        Text(stringResource(id = R.string.all_countries))
+    }
 }
 
 

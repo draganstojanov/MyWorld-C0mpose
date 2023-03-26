@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.draganstojanov.myworld_compose.screens.MainScreen
 import com.draganstojanov.myworld_compose.ui.theme.MyWorldComposeTheme
+import com.draganstojanov.myworld_compose.util.navigation.MyWorldNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyWorldComposeTheme {
-                MainScreen()
+                MyWorldNavigation()
             }
         }
     }
@@ -26,6 +26,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyWorldComposeTheme {
-        MainScreen()
+
     }
 }

@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 data class Country(
 
     val region: String? = null,
-    val subregion: String? = null,
+    var subregion: String? = null,
     val continents: List<String?>? = null,
 
     val name: Name? = null,
