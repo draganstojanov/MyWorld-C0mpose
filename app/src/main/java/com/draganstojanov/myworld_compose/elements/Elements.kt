@@ -1,5 +1,7 @@
 package com.draganstojanov.myworld_compose.elements
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,4 +30,9 @@ fun SomethingWentWrongFullScreen() {
             )
         )
     }
+}
+
+
+fun ShowToast(context: Context, message: Any?, isLong: Boolean = false) {
+    Toast.makeText(context, message.toString(), if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
 }
