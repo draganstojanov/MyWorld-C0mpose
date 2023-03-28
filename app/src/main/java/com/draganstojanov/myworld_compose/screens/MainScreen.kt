@@ -1,14 +1,10 @@
 package com.draganstojanov.myworld_compose.screens
 
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.ColumnScopeInstance.weight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -29,7 +25,8 @@ import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.ButtonStandard
 import com.draganstojanov.myworld_compose.elements.ShowToast
 import com.draganstojanov.myworld_compose.elements.SomethingWentWrongFullScreen
-import com.draganstojanov.myworld_compose.ui.theme.colorElementBack
+import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
+import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
 import com.draganstojanov.myworld_compose.util.eventModel.FilterEvent
 import com.draganstojanov.myworld_compose.util.eventModel.FilterEventType
@@ -43,7 +40,7 @@ fun MainScreen(navController: NavHostController) {
     val viewModel: MainViewModel = hiltViewModel()
     val countries = viewModel.countriesState.value
     if (countries.isNotEmpty()) {
-        AllCountriesButton(
+        AllCountries(
             viewModel = viewModel,
             navController = navController
         )
@@ -55,37 +52,36 @@ fun MainScreen(navController: NavHostController) {
 
 
 @Composable
-fun AllCountriesButton(
+fun AllCountries(
     viewModel: MainViewModel,
     navController: NavController
 ) {
     val context = LocalContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
 
-    ) {
-        TopAppBar(
-            title = { Text(stringResource(id = R.string.app_name), color = colorWhite) },
-            backgroundColor = colorElementBack,
-            actions = {
-                IconButton(onClick = { ShowToast(context, message = "MY WORLD - COMPOSE") }) {
-                    Icon(Icons.Filled.Info, "About", tint = colorWhite)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(id = R.string.app_name), color = colorWhite) },
+                backgroundColor = colorPrimary,
+                actions = {
+                    IconButton(onClick = { ShowToast(context, message = "MY WORLD - COMPOSE") }) {
+                        Icon(Icons.Filled.Info, "About", tint = colorWhite)
+                    }
                 }
-            }
-        )
+            )
+        }
+    ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = dimensionResource(id = R.dimen.rounded_corner))
-        ) {
+                .padding(
+                    start = dimensionResource(id = R.dimen.padding_horizontal),
+                    end = dimensionResource(id = R.dimen.padding_horizontal),
+                    top = 16.dp
+                )
+                .verticalScroll(rememberScrollState())
 
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-            )
+        ) {
 
             MainScreenCard(
                 title = stringResource(id = R.string.continents),
@@ -93,12 +89,6 @@ fun AllCountriesButton(
                 viewModel = viewModel,
                 navController = navController,
                 eventType = CONTINENT
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
             )
 
             MainScreenCard(
@@ -109,12 +99,6 @@ fun AllCountriesButton(
                 eventType = REGION
             )
 
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-            )
-
             MainScreenCard(
                 title = stringResource(id = R.string.subregions),
                 list = viewModel.subregionsState.value.toList(),
@@ -123,22 +107,19 @@ fun AllCountriesButton(
                 eventType = SUBREGION
             )
 
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-            )
-
             ButtonStandard(
+                modifier = Modifier.padding(bottom = 32.dp, top = 16.dp),
                 stringRes = R.string.all_countries,
                 onCLick = {
                     viewModel.filterEvent(FilterEvent.All)
                     navController.navigate(NavScreens.CountryListScreen.name)
                 })
+
         }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MainScreenCard(
     title: String,
@@ -150,19 +131,26 @@ fun MainScreenCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = colorWhite),
+            .background(color = colorWhite)
+            .padding(bottom = 16.dp),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)),
         elevation = dimensionResource(id = R.dimen.elevation_value)
+
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorWhite)
+                .border(
+                    width = 4.dp,
+                    color = colorPrimary,
+                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner))
+                )
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = colorElementBack)
+                    .background(color = colorPrimary)
                     .height(dimensionResource(id = R.dimen.element_height_standard)),
                 contentAlignment = Alignment.Center
             ) {
@@ -174,35 +162,47 @@ fun MainScreenCard(
                 )
             }
 
-            LazyColumn {
-                items(list) { item ->
-                    Box(
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                for (item in list) {
+                    Card(
+                        backgroundColor = colorSecondary,
+                        shape = CircleShape,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(dimensionResource(id = R.dimen.element_height_large)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        TextButton(onClick = {
-                            when (eventType) {
-                                CONTINENT -> viewModel.filterEvent(FilterEvent.Continent(item))
-                                REGION -> viewModel.filterEvent(FilterEvent.Region(item))
-                                SUBREGION -> viewModel.filterEvent(FilterEvent.Subregion(item))
-                                else -> {}
-                            }
-                            navController.navigate(NavScreens.CountryListScreen.name)
-                        }) {
-                            Text(
-                                fontWeight = FontWeight.ExtraBold,
-                                text = item,
-                                fontSize = 20.sp,
-                                textAlign = TextAlign.Center,
-                                color = colorElementBack
-                            )
-                        }
+                            .padding(8.dp)
+                            .clickable {
+                                viewModel.filterEvent(getFilterEvent(item, eventType))
+                                navController.navigate(NavScreens.CountryListScreen.name)
+                            },
+                        elevation = dimensionResource(id = R.dimen.elevation_value),
+
+                        ) {
+                        Text(
+                            text = item,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 20.sp,
+                            color = colorWhite,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)
+                        )
                     }
                 }
             }
         }
+    }
+}
+
+private fun getFilterEvent(item: String, eventType: FilterEventType): FilterEvent {
+    return when (eventType) {
+        CONTINENT -> FilterEvent.Continent(item)
+        REGION -> FilterEvent.Region(item)
+        SUBREGION -> FilterEvent.Subregion(item)
+        else -> FilterEvent.All
     }
 }
 

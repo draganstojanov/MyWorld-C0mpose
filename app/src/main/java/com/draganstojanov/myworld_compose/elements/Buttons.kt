@@ -12,21 +12,22 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.draganstojanov.myworld_compose.R
-import com.draganstojanov.myworld_compose.ui.theme.colorElementBack
+import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
 
 @Composable
 fun ButtonStandard(
+    modifier: Modifier,
     stringRes: Int,
     onCLick: () -> Unit
 ) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(dimensionResource(id = R.dimen.element_height_standard)),
         shape = CircleShape,
         onClick = onCLick,
-        colors = ButtonDefaults.buttonColors(backgroundColor = colorElementBack),
+        colors = ButtonDefaults.buttonColors(backgroundColor = colorPrimary),
         elevation = ButtonDefaults.elevation(defaultElevation = dimensionResource(id = R.dimen.elevation_value))
     ) {
         Text(
