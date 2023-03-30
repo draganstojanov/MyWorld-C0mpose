@@ -67,6 +67,7 @@ dependencies {
     val retrofitVersion = "2.9.0"
     val roomVersion = "2.5.0"
     val kotlinVersion = "1.8.10"
+    val materialVersion="1.4.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.activity:activity-compose:1.7.0")
@@ -75,11 +76,13 @@ dependencies {
 
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    implementation("androidx.compose.material:material:1.3.1")
-    implementation("androidx.compose.runtime:runtime-livedata:1.4.0")
+    implementation("androidx.compose.material:material:$materialVersion")
+  //  implementation("androidx.compose.runtime:runtime-livedata:1.4.0")
 
     //Material icons - use with caution!
-    implementation("androidx.compose.material:material-icons-extended:1.3.1")
+  //  implementation("androidx.compose.material:material-icons-extended:$materialVersion")
+
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 
     // Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
@@ -111,7 +114,6 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.3.0")
-
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

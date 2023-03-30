@@ -1,6 +1,5 @@
 package com.draganstojanov.myworld_compose.model
 
-import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
 data class Country(
@@ -46,5 +45,3 @@ data class Country(
     val timezones: List<String?>? = null,
 
     )
-
-

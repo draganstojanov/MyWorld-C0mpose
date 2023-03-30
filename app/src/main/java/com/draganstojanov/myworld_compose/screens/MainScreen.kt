@@ -1,6 +1,7 @@
 package com.draganstojanov.myworld_compose.screens
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -19,103 +20,100 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.ButtonStandard
 import com.draganstojanov.myworld_compose.elements.ShowToast
-import com.draganstojanov.myworld_compose.elements.SomethingWentWrongFullScreen
 import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
 import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
-import com.draganstojanov.myworld_compose.util.eventModel.FilterEvent
-import com.draganstojanov.myworld_compose.util.eventModel.FilterEventType
-import com.draganstojanov.myworld_compose.util.eventModel.FilterEventType.*
+import com.draganstojanov.myworld_compose.util.constants.FilterEventType
+import com.draganstojanov.myworld_compose.util.constants.FilterEventType.*
 import com.draganstojanov.myworld_compose.util.navigation.NavScreens
 import com.draganstojanov.myworld_compose.viewModel.MainViewModel
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
-
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(navController: NavHostController) {
     val viewModel: MainViewModel = hiltViewModel()
     val countries = viewModel.countriesState.value
     if (countries.isNotEmpty()) {
-        AllCountries(
-            viewModel = viewModel,
-            navController = navController
-        )
-    } else {
-        SomethingWentWrongFullScreen()
+        val context = LocalContext.current
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(stringResource(id = R.string.app_name), color = colorWhite) },
+                    backgroundColor = colorPrimary,
+                    actions = {
+                        IconButton(onClick = { ShowToast(context, message = "MY WORLD - COMPOSE") }) {
+                            Icon(Icons.Filled.Info, "About", tint = colorWhite)
+                        }
+                    }
+                )
+            }
+        ) {
+            AllCountries(viewModel = viewModel) {
+                var cList: String = Json.encodeToString(viewModel.filteredCountryList.value)
+                cList = cList.replace("/", "*#=@*")
+                navController.navigate(
+                    "${NavScreens.CountryListScreen.name}/${cList}/${viewModel.title}"
+                )
+            }
+        }
     }
-
 }
 
 
 @Composable
 fun AllCountries(
     viewModel: MainViewModel,
-    navController: NavController
+    onSelectItem: () -> Unit
 ) {
-    val context = LocalContext.current
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(id = R.string.app_name), color = colorWhite) },
-                backgroundColor = colorPrimary,
-                actions = {
-                    IconButton(onClick = { ShowToast(context, message = "MY WORLD - COMPOSE") }) {
-                        Icon(Icons.Filled.Info, "About", tint = colorWhite)
-                    }
-                }
+    val allCountries = stringResource(id = R.string.all_countries)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                start = dimensionResource(id = R.dimen.padding_horizontal),
+                end = dimensionResource(id = R.dimen.padding_horizontal),
+                top = 16.dp
             )
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = dimensionResource(id = R.dimen.padding_horizontal),
-                    end = dimensionResource(id = R.dimen.padding_horizontal),
-                    top = 16.dp
-                )
-                .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState())
 
-        ) {
+    ) {
+        MainScreenCard(
+            title = stringResource(id = R.string.continents),
+            list = viewModel.continentsState.value.toList(),
+            viewModel = viewModel,
+            eventType = CONTINENT,
+            onSelectItem = onSelectItem
+        )
 
-            MainScreenCard(
-                title = stringResource(id = R.string.continents),
-                list = viewModel.continentsState.value.toList(),
-                viewModel = viewModel,
-                navController = navController,
-                eventType = CONTINENT
-            )
+        MainScreenCard(
+            title = stringResource(id = R.string.regions),
+            list = viewModel.regionsState.value.toList(),
+            viewModel = viewModel,
+            eventType = REGION,
+            onSelectItem = onSelectItem
+        )
 
-            MainScreenCard(
-                title = stringResource(id = R.string.regions),
-                list = viewModel.regionsState.value.toList(),
-                viewModel = viewModel,
-                navController = navController,
-                eventType = REGION
-            )
+        MainScreenCard(
+            title = stringResource(id = R.string.subregions),
+            list = viewModel.subregionsState.value.toList(),
+            viewModel = viewModel,
+            eventType = SUBREGION,
+            onSelectItem = onSelectItem
+        )
 
-            MainScreenCard(
-                title = stringResource(id = R.string.subregions),
-                list = viewModel.subregionsState.value.toList(),
-                viewModel = viewModel,
-                navController = navController,
-                eventType = SUBREGION
-            )
-
-            ButtonStandard(
-                modifier = Modifier.padding(bottom = 32.dp, top = 16.dp),
-                stringRes = R.string.all_countries,
-                onCLick = {
-                    viewModel.filterEvent(FilterEvent.All)
-                    navController.navigate(NavScreens.CountryListScreen.name)
-                })
-
-        }
+        ButtonStandard(
+            modifier = Modifier.padding(bottom = 32.dp, top = 16.dp),
+            stringRes = R.string.all_countries,
+            onCLick = {
+                viewModel.filterEvent(ALL, allCountries)
+                onSelectItem.invoke()
+            })
     }
 }
 
@@ -125,8 +123,8 @@ fun MainScreenCard(
     title: String,
     list: List<String>,
     viewModel: MainViewModel,
-    navController: NavController,
-    eventType: FilterEventType
+    eventType: FilterEventType,
+    onSelectItem: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -142,7 +140,7 @@ fun MainScreenCard(
                 .fillMaxWidth()
                 .background(colorWhite)
                 .border(
-                    width = 4.dp,
+                    width = 2.dp,
                     color = colorPrimary,
                     shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner))
                 )
@@ -176,12 +174,11 @@ fun MainScreenCard(
                         modifier = Modifier
                             .padding(8.dp)
                             .clickable {
-                                viewModel.filterEvent(getFilterEvent(item, eventType))
-                                navController.navigate(NavScreens.CountryListScreen.name)
+                                viewModel.filterEvent(eventType, item)
+                                onSelectItem.invoke()
                             },
                         elevation = dimensionResource(id = R.dimen.elevation_value),
-
-                        ) {
+                    ) {
                         Text(
                             text = item,
                             fontWeight = FontWeight.ExtraBold,
@@ -197,14 +194,6 @@ fun MainScreenCard(
     }
 }
 
-private fun getFilterEvent(item: String, eventType: FilterEventType): FilterEvent {
-    return when (eventType) {
-        CONTINENT -> FilterEvent.Continent(item)
-        REGION -> FilterEvent.Region(item)
-        SUBREGION -> FilterEvent.Subregion(item)
-        else -> FilterEvent.All
-    }
-}
 
 
 

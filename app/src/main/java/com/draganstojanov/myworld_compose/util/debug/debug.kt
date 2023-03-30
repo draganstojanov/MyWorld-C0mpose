@@ -1,4 +1,4 @@
-package biz.simula.infinity.util.debug
+package com.draganstojanov.myworld_compose.util.debug
 
 import android.util.Log
 

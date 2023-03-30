@@ -3,7 +3,7 @@
 Jetpack Compose demo app
 
 - Jetpack compose
-- Jetpac navigation
+- Jetpack navigation
 - Dagger Hilt
 - Retrofit
 - Kotlin serialization
