@@ -20,6 +20,10 @@ class MyWorldRepository @Inject constructor(
                 is ResponseState.Success -> {
                     val c = (response.data) as List<*>
                     val countries = c.filterIsInstance<Country>().apply { if (size != c.size) return emptyList() }
+
+                    countries.forEachIndexed { index, country ->
+                        country.countryId = index + 1}
+
                     prefs.apply {
                         saveAllCountries(countries)
                         saveLastTimestamp()

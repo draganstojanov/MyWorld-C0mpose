@@ -4,6 +4,8 @@ package com.draganstojanov.myworld_compose.model
 @kotlinx.serialization.Serializable
 data class Country(
 
+    var countryId: Int? = null,
+
     val region: String? = null,
     var subregion: String? = null,
     val continents: List<String?>? = null,
