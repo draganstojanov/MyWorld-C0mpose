@@ -22,8 +22,7 @@ class MainViewModel @Inject constructor(private val repo: MyWorldRepository) : V
     val continentsState: MutableState<Set<String>> = mutableStateOf(emptySet())
 
     val filteredCountryList: MutableState<List<Country>> = mutableStateOf(emptyList())
-    var title: String? = null
-
+  //  var title: String? = null
 
     init {
         getAllCountries()
@@ -70,7 +69,7 @@ class MainViewModel @Inject constructor(private val repo: MyWorldRepository) : V
             FilterEventType.REGION -> filteredList.addAll(countriesState.value.filter { it.region == filter })
             FilterEventType.SUBREGION -> filteredList.addAll(countriesState.value.filter { it.subregion == filter })
         }
-        title = filter
+      //  title = filter
         filteredCountryList.value = filteredList.toList()
     }
 

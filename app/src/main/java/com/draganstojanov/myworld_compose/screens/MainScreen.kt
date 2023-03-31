@@ -1,18 +1,14 @@
 package com.draganstojanov.myworld_compose.screens
 
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -20,11 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.ButtonStandard
-import com.draganstojanov.myworld_compose.elements.ShowToast
+import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
 import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
 import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
@@ -37,29 +32,27 @@ import kotlinx.serialization.json.Json
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navController: NavHostController) {
-    val viewModel: MainViewModel = hiltViewModel()
+fun MainScreen(
+    navController: NavHostController,
+    viewModel: MainViewModel
+) {
     val countries = viewModel.countriesState.value
     if (countries.isNotEmpty()) {
-        val context = LocalContext.current
         Scaffold(
             topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(id = R.string.app_name), color = colorWhite) },
-                    backgroundColor = colorPrimary,
-                    actions = {
-                        IconButton(onClick = { ShowToast(context, message = "MY WORLD - COMPOSE") }) {
-                            Icon(Icons.Filled.Info, "About", tint = colorWhite)
-                        }
-                    }
+                CustomTopAppBar(
+                    title = stringResource(id = R.string.app_name),
+                    navController = navController,
+                    hasBackButton = false
                 )
             }
+
         ) {
             AllCountries(viewModel = viewModel) {
                 var cList: String = Json.encodeToString(viewModel.filteredCountryList.value)
                 cList = cList.replace("/", "*#=@*")
                 navController.navigate(
-                    "${NavScreens.CountryListScreen.name}/${cList}/${viewModel.title}"
+                    "${NavScreens.CountryListScreen.name}/${cList}/${it}"
                 )
             }
         }
@@ -70,7 +63,7 @@ fun MainScreen(navController: NavHostController) {
 @Composable
 fun AllCountries(
     viewModel: MainViewModel,
-    onSelectItem: () -> Unit
+    onSelectItem: (String?) -> Unit
 ) {
     val allCountries = stringResource(id = R.string.all_countries)
     Column(
@@ -113,7 +106,7 @@ fun AllCountries(
             stringRes = R.string.all_countries,
             onCLick = {
                 viewModel.filterEvent(ALL, allCountries)
-                onSelectItem.invoke()
+                onSelectItem(allCountries)
             })
     }
 }
@@ -125,7 +118,7 @@ fun MainScreenCard(
     list: List<String>,
     viewModel: MainViewModel,
     eventType: FilterEventType,
-    onSelectItem: () -> Unit
+    onSelectItem: (String?) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -178,7 +171,7 @@ fun MainScreenCard(
                             .padding(8.dp)
                             .clickable {
                                 viewModel.filterEvent(eventType, item)
-                                onSelectItem.invoke()
+                                onSelectItem(item)
                             },
                         elevation = dimensionResource(id = R.dimen.elevation_value),
                     ) {
