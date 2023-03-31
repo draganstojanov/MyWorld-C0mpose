@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
@@ -32,7 +33,11 @@ fun ButtonStandard(
     ) {
         Text(
             stringResource(id = stringRes),
-            color = colorWhite, fontSize = 20.sp
+            style = TextStyle(
+                color = colorWhite,
+                fontSize = 20.sp
+            )
+
         )
     }
 }

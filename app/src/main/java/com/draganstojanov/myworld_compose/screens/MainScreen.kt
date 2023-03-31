@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -154,9 +155,11 @@ fun MainScreenCard(
             ) {
                 Text(
                     text = title,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center,
-                    color = colorWhite
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center,
+                        color = colorWhite
+                    )
                 )
             }
 
@@ -180,12 +183,17 @@ fun MainScreenCard(
                         elevation = dimensionResource(id = R.dimen.elevation_value),
                     ) {
                         Text(
-                            text = item,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontSize = 20.sp,
-                            color = colorWhite,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)
+                            text = item, modifier =
+                            Modifier.padding(
+                                vertical = 4.dp,
+                                horizontal = 12.dp
+                            ),
+                            style = TextStyle(
+                                fontWeight = FontWeight.ExtraBold,
+                                fontSize = 20.sp,
+                                color = colorWhite,
+                                textAlign = TextAlign.Center,
+                            )
                         )
                     }
                 }

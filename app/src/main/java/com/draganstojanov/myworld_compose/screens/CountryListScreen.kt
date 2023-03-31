@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
@@ -153,29 +154,47 @@ fun ListOfCountries(
                         .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
                         .background(colorSecondary),
                 ) {
+
+
                     Row()
                     {
-                        Text(text = country.flag.toString(), modifier = Modifier.padding(12.dp))
+                        Box(
+                            modifier = Modifier.height(40.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = country.flag.toString(),
+                                modifier = Modifier
+                                    .wrapContentHeight()
+                                    .padding(horizontal = 12.dp),
+                            )
+                        }
+
                         Column {
+                            Box(
+                                modifier = Modifier.height(40.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier.wrapContentHeight(),
+                                    text = country.name?.common.toString(),
+                                    color = colorWhite,
+                                    style = MaterialTheme.typography.h5,
+                                )
+                            }
                             Text(
                                 modifier = Modifier.padding(vertical = 12.dp),
                                 text = country.name?.common.toString(),
                                 color = colorWhite,
-                                style = MaterialTheme.typography.h5
                             )
-                            Text(
-                                modifier = Modifier.padding(12.dp),
-                                text = country.name?.common.toString(),
-                                color = colorWhite,
-                            )
+
                         }
-
-
-                        //   }
                     }
                 }
             }
+
         }
     }
 }
+
 
