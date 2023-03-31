@@ -14,6 +14,7 @@ class CountryListViewModel : ViewModel() {
 
     val filteredCountryList: MutableState<List<Country>> = mutableStateOf(emptyList())
     val searchFilteredList: MutableState<List<Country>> = mutableStateOf(emptyList())
+    val nativeNamesList: MutableState<List<Native>> = mutableStateOf(emptyList())
 
     fun searchFilter(phrase: String) {
         val searchList = mutableListOf<Country>()
@@ -30,8 +31,8 @@ class CountryListViewModel : ViewModel() {
     private fun containsInNativeName(searchFor: String, nativeName: NativeName?): Boolean {
         for (property in NativeName::class.memberProperties) {
             if (nativeName != null) {
-                val value = property.get(nativeName) as Native?
-                if (value?.common?.contains(searchFor, true) == true || value?.official?.contains(searchFor, true) == true) {
+                val native = property.get(nativeName) as Native?
+                if (native?.common?.contains(searchFor, true) == true || native?.official?.contains(searchFor, true) == true) {
                     return true
                 }
             }
@@ -39,4 +40,16 @@ class CountryListViewModel : ViewModel() {
         return false
     }
 
+    fun getNativeNamesList(country: Country?) {
+        val list = mutableListOf<Native>()
+        for (property in NativeName::class.memberProperties) {
+            val native: Native? = property.get(country?.name?.nativeName!!) as Native?
+            if (native != null) {
+                list.add(native)
+            }
+        }
+        nativeNamesList.value = list
+    }
+
 }
+

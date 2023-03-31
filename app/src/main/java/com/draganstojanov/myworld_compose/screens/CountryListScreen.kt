@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
@@ -26,6 +25,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
@@ -92,7 +93,9 @@ fun CountriesListLayout(
 @Composable
 fun SearchTextField(viewModel: CountryListViewModel) {
     val inputValue = remember { mutableStateOf(TextFieldValue()) }
-    Box(modifier = Modifier.fillMaxWidth())
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    )
     {
         OutlinedTextField(
             value = inputValue.value,
@@ -147,54 +150,74 @@ fun ListOfCountries(
             modifier = Modifier.fillMaxWidth()
         ) {
             items(items = countryList.value) { country ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp)
-                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
-                        .background(colorSecondary),
-                ) {
-
-
-                    Row()
-                    {
-                        Box(
-                            modifier = Modifier.height(40.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = country.flag.toString(),
-                                modifier = Modifier
-                                    .wrapContentHeight()
-                                    .padding(horizontal = 12.dp),
-                            )
-                        }
-
-                        Column {
-                            Box(
-                                modifier = Modifier.height(40.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    modifier = Modifier.wrapContentHeight(),
-                                    text = country.name?.common.toString(),
-                                    color = colorWhite,
-                                    style = MaterialTheme.typography.h5,
-                                )
-                            }
-                            Text(
-                                modifier = Modifier.padding(vertical = 12.dp),
-                                text = country.name?.common.toString(),
-                                color = colorWhite,
-                            )
-
-                        }
-                    }
-                }
+                CountryItem(viewModel = viewModel, country = country)
             }
-
         }
     }
 }
+
+
+@Composable
+fun CountryItem(
+    country: Country,
+    viewModel: CountryListViewModel
+) {
+    val nativeNamesList = viewModel.nativeNamesList
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
+            .background(colorSecondary),
+    ) {
+        val (flagIcon, name, nativeName) = createRefs()
+
+        Text(
+            text = country.flag.toString(),
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 12.dp)
+                .constrainAs(flagIcon) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                },
+        )
+
+        Text(
+            text = country.name?.common.toString(),
+            color = colorWhite,
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .constrainAs(name) {
+                    top.linkTo(parent.top)
+                    start.linkTo(flagIcon.end)
+                    end.linkTo(parent.end)
+                    baseline.linkTo(flagIcon.baseline)
+                    width = Dimension.fillToConstraints
+                }
+        )
+
+        Column(modifier = Modifier
+            .padding(bottom = 8.dp)
+            .constrainAs(nativeName) {
+                top.linkTo(name.bottom)
+                start.linkTo(flagIcon.end)
+                end.linkTo(parent.end)
+                width = Dimension.fillToConstraints
+            }) {
+            viewModel.getNativeNamesList(country)
+            repeat(nativeNamesList.value.size) {
+                Text(
+                    text = nativeNamesList.value[it].common.toString(),
+                    color = colorWhite,
+                    style = MaterialTheme.typography.body1,
+                )
+            }
+        }
+
+
+    }
+}
+
 
 
