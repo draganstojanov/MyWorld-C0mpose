@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -69,11 +70,7 @@ fun AllCountries(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(
-                start = dimensionResource(id = R.dimen.padding_horizontal),
-                end = dimensionResource(id = R.dimen.padding_horizontal),
-                top = 16.dp
-            )
+            .padding(all = dimensionResource(id = R.dimen.padding_horizontal))
             .verticalScroll(rememberScrollState())
 
     ) {
@@ -120,75 +117,69 @@ fun MainScreenCard(
     eventType: FilterEventType,
     onSelectItem: (String?) -> Unit
 ) {
-    Card(
+    Column(
         modifier = Modifier
+            .padding(bottom = 16.dp)
+            .border(
+                width = 2.dp,
+                color = colorPrimary,
+                shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)),
+            )
             .fillMaxWidth()
-            .background(color = colorWhite)
-            .padding(bottom = 16.dp),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)),
-        elevation = dimensionResource(id = R.dimen.elevation_value)
+            .background(colorWhite)
+            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
 
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colorWhite)
-                .border(
-                    width = 2.dp,
-                    color = colorPrimary,
-                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner))
-                )
+                .background(color = colorPrimary)
+                .height(dimensionResource(id = R.dimen.element_height_standard)),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorPrimary)
-                    .height(dimensionResource(id = R.dimen.element_height_standard)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = title,
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        color = colorWhite
-                    )
+            Text(
+                text = title,
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    color = colorWhite
                 )
-            }
+            )
+        }
 
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                for (item in list) {
-                    Card(
-                        backgroundColor = colorSecondary,
-                        shape = CircleShape,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clickable {
-                                viewModel.filterEvent(eventType, item)
-                                onSelectItem(item)
-                            },
-                        elevation = dimensionResource(id = R.dimen.elevation_value),
-                    ) {
-                        Text(
-                            text = item, modifier =
-                            Modifier.padding(
-                                vertical = 4.dp,
-                                horizontal = 12.dp
-                            ),
-                            style = TextStyle(
-                                fontWeight = FontWeight.ExtraBold,
-                                fontSize = 20.sp,
-                                color = colorWhite,
-                                textAlign = TextAlign.Center,
-                            )
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            for (item in list) {
+                Card(
+                    backgroundColor = colorSecondary,
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            viewModel.filterEvent(eventType, item)
+                            onSelectItem(item)
+                        },
+                    elevation = dimensionResource(id = R.dimen.elevation_value),
+                ) {
+                    Text(
+                        text = item,
+                        modifier =
+                        Modifier.padding(
+                            vertical = 4.dp,
+                            horizontal = 12.dp
+                        ),
+                        style = TextStyle(
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 20.sp,
+                            color = colorWhite,
+                            textAlign = TextAlign.Center,
                         )
-                    }
+                    )
                 }
             }
         }

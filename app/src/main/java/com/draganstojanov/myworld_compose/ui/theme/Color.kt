@@ -10,3 +10,5 @@ val Teal200 = Color(0xFF03DAC5)
 val colorPrimary = Color(0xFF033E6B)
 val colorSecondary = Color(0xFF2A76AF)
 val colorWhite = Color.White
+val colorGreyPrimary = Color(0xFFDDDDDD)
+val colorGreySecondary = Color(0xFF999999)

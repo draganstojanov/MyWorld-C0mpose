@@ -62,9 +62,11 @@ class CountryListViewModel @Inject constructor(
     fun getNativeNamesList(country: Country?) {
         val list = mutableListOf<Native>()
         for (property in NativeName::class.memberProperties) {
-            val native: Native? = property.get(country?.name?.nativeName!!) as Native?
-            if (native != null) {
-                list.add(native)
+            if (country?.name?.nativeName != null) {
+                val native: Native? = property.get(country.name.nativeName) as Native?
+                if (native != null) {
+                    list.add(native)
+                }
             }
         }
         nativeNamesList.value = list

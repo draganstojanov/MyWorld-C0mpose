@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
@@ -36,20 +35,14 @@ import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
 import com.draganstojanov.myworld_compose.util.navigation.NavScreens
 import com.draganstojanov.myworld_compose.viewModel.CountryListViewModel
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CountryListScreen(
     navController: NavHostController,
- //   filteredList: String?,
     title: String?,
     viewModel: CountryListViewModel
 ) {
-//    val fl = filteredList?.replace("*#=@*", "/")
-//    viewModel.filteredCountryList.value = Json.decodeFromString(fl.toString())
-//    viewModel.searchFilter("")
     val countryList = viewModel.searchFilteredList
 
     Scaffold(
