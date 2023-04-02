@@ -13,6 +13,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
@@ -56,35 +58,6 @@ fun CountryDetails(countryState: MutableState<Country?>, nativeNamesState: Mutab
     ) {
         NameBLock(countryState, nativeNamesState)
         FlagAndCoatOfArms(countryState)
-    }
-
-}
-
-@Composable
-fun FlagAndCoatOfArms(countryState: MutableState<Country?>) {
-    Row(
-        modifier = Modifier
-            // .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
-    ) {
-        Box(modifier = Modifier.weight(1F, true)) {
-            AsyncImage(
-                model = countryState.value?.flags?.png,
-                placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Flag",
-                contentScale = ContentScale.FillBounds
-
-            )
-        }
-        Box(modifier = Modifier.weight(2F, true)) {
-            SubcomposeAsyncImage(
-                model = countryState.value?.coatOfArms?.png,
-                contentDescription = null,
-                loading = { CircularProgressIndicator() },
-                contentScale = ContentScale.FillBounds
-            )
-        }
     }
 }
 
@@ -130,6 +103,54 @@ fun NameBLock(countryState: MutableState<Country?>, nativeNamesState: MutableSta
             )
         }
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
+    }
+}
+
+@Composable
+fun FlagAndCoatOfArms(countryState: MutableState<Country?>) {
+
+    ConstraintLayout(
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
+            .fillMaxWidth()
+            .background(colorGreyPrimary)
+
+    ) {
+        val (flag, coatOfArms) = createRefs()
+        AsyncImage(
+            modifier = Modifier
+                .padding(4.dp)
+                .constrainAs(flag) {
+                    start.linkTo(parent.start)
+                    top.linkTo(coatOfArms.top)
+                    bottom.linkTo(coatOfArms.bottom)
+                    end.linkTo(coatOfArms.start)
+                    width = Dimension.fillToConstraints
+                },
+            model = countryState.value?.flags?.png,
+            placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+            contentDescription = "Flag",
+            contentScale = ContentScale.FillWidth
+
+        )
+        SubcomposeAsyncImage(
+            modifier = Modifier
+                // .fillMaxWidth()
+                .padding(4.dp)
+                .constrainAs(coatOfArms) {
+                    start.linkTo(flag.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                },
+            model = countryState.value?.coatOfArms?.png,
+            contentDescription = null,
+            loading = { CircularProgressIndicator(modifier = Modifier.width(32.dp)) },
+            contentScale = ContentScale.FillWidth,
+        )
+
     }
 }
 
