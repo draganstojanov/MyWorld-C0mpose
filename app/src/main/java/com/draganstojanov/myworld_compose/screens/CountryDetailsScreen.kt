@@ -12,12 +12,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import coil.compose.SubcomposeAsyncImage
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
 import com.draganstojanov.myworld_compose.model.Country
@@ -56,20 +60,122 @@ fun CountryDetails(countryState: MutableState<Country?>, nativeNamesState: Mutab
             .fillMaxWidth()
             .padding(all = dimensionResource(id = R.dimen.padding_horizontal))
     ) {
-        NameBLock(countryState, nativeNamesState)
+        NameBlock(countryState, nativeNamesState)
         FlagAndCoatOfArms(countryState)
+        GeoData(countryState)
     }
 }
 
 @Composable
-fun NameBLock(countryState: MutableState<Country?>, nativeNamesState: MutableState<List<Native>>) {
+fun GeoData(countryState: MutableState<Country?>) {
     Column(
         modifier = Modifier
             .padding(bottom = 16.dp)
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
             .fillMaxWidth()
             .background(colorSecondary)
+            .padding(top = 4.dp, bottom = 8.dp)
+    ) {
+        DataRow(stringResource(id = R.string.region), countryState.value?.region)
+        DataRow(stringResource(id = R.string.subregion), countryState.value?.subregion)
+        DataRowList(stringResource(id = R.string.continent), countryState.value?.continents)
+        DataRowList(stringResource(id = R.string.borders), countryState.value?.borders)//todo lista flag+name
+    }
+}
 
+
+@Composable
+fun DataRow(label: String?, value: String?) {
+    Row(modifier = Modifier.padding(top = 4.dp)) {
+        if (label != null) {
+            DataLabel(label, Modifier.weight(3f))
+        }
+        if (value != null) {
+            DataValue(value, Modifier.weight(7f))
+        }
+    }
+}
+
+
+@Composable
+fun DataRowList(label: String?, value: List<String?>?) {
+    Row(
+        modifier = Modifier.padding(top = 4.dp)
+    ) {
+        if (label != null) {
+            DataLabel(label, Modifier.weight(3f))
+        }
+        if (value != null) {
+            DataList(value, Modifier.weight(7f))
+        }
+    }
+}
+
+@Composable
+fun DataLabel(label: String, modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+        Text(
+            modifier = Modifier
+                .padding(start = 12.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.End,
+            text = "${label}:",
+            style = TextStyle(
+                color = colorWhite,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+            )
+        )
+    }
+}
+
+@Composable
+fun DataValue(value: String, modifier: Modifier) {
+    Box(modifier = modifier) {
+        Text(
+            modifier = Modifier.padding(start = 2.dp),
+            text = value,
+            style = TextStyle(
+                color = colorWhite,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
+        )
+    }
+}
+
+@Composable
+fun DataList(list: List<String?>?, modifier: Modifier) {
+    Column(modifier = modifier) {
+        list?.size?.let {
+            repeat(it) { index ->
+                Box() {
+                    list[index]?.let { value ->
+                        Text(
+                            modifier = Modifier.padding(start = 2.dp),
+                            text = value,
+                            style = TextStyle(
+                                color = colorWhite,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun NameBlock(countryState: MutableState<Country?>, nativeNamesState: MutableState<List<Native>>) {
+    Column(
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner)))
+            .fillMaxWidth()
+            .background(colorSecondary)
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
@@ -134,9 +240,8 @@ fun FlagAndCoatOfArms(countryState: MutableState<Country?>) {
             contentScale = ContentScale.FillWidth
 
         )
-        SubcomposeAsyncImage(
+        AsyncImage(
             modifier = Modifier
-                // .fillMaxWidth()
                 .padding(4.dp)
                 .constrainAs(coatOfArms) {
                     start.linkTo(flag.end)
@@ -146,11 +251,10 @@ fun FlagAndCoatOfArms(countryState: MutableState<Country?>) {
                     width = Dimension.fillToConstraints
                 },
             model = countryState.value?.coatOfArms?.png,
-            contentDescription = null,
-            loading = { CircularProgressIndicator(modifier = Modifier.width(32.dp)) },
+            placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+            contentDescription = "CoatOfArms",
             contentScale = ContentScale.FillWidth,
         )
-
     }
 }
 

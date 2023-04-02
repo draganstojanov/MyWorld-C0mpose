@@ -7,4 +7,8 @@
     <string name="subregions">Subregions</string>
     <string name="indefinite">Indefinite</string>
     <string name="search_hint">Search for...</string>
+    <string name="region">Region</string>
+    <string name="subregion">Subregion</string>
+    <string name="continent">Continent</string>
+    <string name="borders">Borders</string>
 </resources>
