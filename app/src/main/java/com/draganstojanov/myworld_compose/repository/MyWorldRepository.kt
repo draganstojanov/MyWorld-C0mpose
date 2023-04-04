@@ -1,7 +1,6 @@
 package com.draganstojanov.myworld_compose.repository
 
-import android.util.Log
-import com.draganstojanov.myworld_compose.model.Country
+import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.util.Prefs
 import com.draganstojanov.myworld_compose.util.network.ResponseParser
 import com.draganstojanov.myworld_compose.util.network.ResponseState

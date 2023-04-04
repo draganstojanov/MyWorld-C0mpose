@@ -24,8 +24,8 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
-import com.draganstojanov.myworld_compose.model.Country
-import com.draganstojanov.myworld_compose.model.Native
+import com.draganstojanov.myworld_compose.model.main.Country
+import com.draganstojanov.myworld_compose.model.main.Native
 import com.draganstojanov.myworld_compose.ui.theme.colorGreyPrimary
 import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
@@ -48,13 +48,17 @@ fun CountryDetailsScreen(
             )
         }
     ) {
-        CountryDetails(countryState, nativeNamesState)
+        CountryDetails(countryState, nativeNamesState, viewModel)
     }
 
 }
 
 @Composable
-fun CountryDetails(countryState: MutableState<Country?>, nativeNamesState: MutableState<List<Native>>) {
+fun CountryDetails(
+    countryState: MutableState<Country?>,
+    nativeNamesState: MutableState<List<Native>>,
+    viewModel: CountryDetailsViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,12 +66,15 @@ fun CountryDetails(countryState: MutableState<Country?>, nativeNamesState: Mutab
     ) {
         NameBlock(countryState, nativeNamesState)
         FlagAndCoatOfArms(countryState)
-        GeoData(countryState)
+        GeoData(countryState, viewModel)
     }
 }
 
 @Composable
-fun GeoData(countryState: MutableState<Country?>) {
+fun GeoData(
+    countryState: MutableState<Country?>,
+    viewModel: CountryDetailsViewModel
+) {
     Column(
         modifier = Modifier
             .padding(bottom = 16.dp)
@@ -79,7 +86,15 @@ fun GeoData(countryState: MutableState<Country?>) {
         DataRow(stringResource(id = R.string.region), countryState.value?.region)
         DataRow(stringResource(id = R.string.subregion), countryState.value?.subregion)
         DataRowList(stringResource(id = R.string.continent), countryState.value?.continents)
-        DataRowList(stringResource(id = R.string.borders), countryState.value?.borders)//todo lista flag+name
+
+        if (!countryState.value?.borders.isNullOrEmpty()) {
+
+            val borderList = viewModel.getBorderList(countryState.value?.borders)
+
+            DataRowList(stringResource(id = R.string.borders), borderList)//todo lista flag+name
+        }
+
+
     }
 }
 
@@ -87,10 +102,8 @@ fun GeoData(countryState: MutableState<Country?>) {
 @Composable
 fun DataRow(label: String?, value: String?) {
     Row(modifier = Modifier.padding(top = 4.dp)) {
-        if (label != null) {
+        if (!value.isNullOrEmpty()) {
             DataLabel(label, Modifier.weight(3f))
-        }
-        if (value != null) {
             DataValue(value, Modifier.weight(7f))
         }
     }
@@ -102,17 +115,15 @@ fun DataRowList(label: String?, value: List<String?>?) {
     Row(
         modifier = Modifier.padding(top = 4.dp)
     ) {
-        if (label != null) {
+        if (value?.isNotEmpty() == true) {
             DataLabel(label, Modifier.weight(3f))
-        }
-        if (value != null) {
             DataList(value, Modifier.weight(7f))
         }
     }
 }
 
 @Composable
-fun DataLabel(label: String, modifier: Modifier = Modifier) {
+fun DataLabel(label: String?, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Text(
             modifier = Modifier
@@ -234,8 +245,10 @@ fun FlagAndCoatOfArms(countryState: MutableState<Country?>) {
                     end.linkTo(coatOfArms.start)
                     width = Dimension.fillToConstraints
                 },
+
             model = countryState.value?.flags?.png,
-            placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+            placeholder = painterResource(id = R.drawable.ic_flag),
+            error = painterResource(id = R.drawable.ic_flag),
             contentDescription = "Flag",
             contentScale = ContentScale.FillWidth
 
@@ -250,8 +263,10 @@ fun FlagAndCoatOfArms(countryState: MutableState<Country?>) {
                     end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                 },
+
             model = countryState.value?.coatOfArms?.png,
-            placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+            placeholder = painterResource(id = R.drawable.ic_public),
+            error = painterResource(id = R.drawable.ic_public),
             contentDescription = "CoatOfArms",
             contentScale = ContentScale.FillWidth,
         )

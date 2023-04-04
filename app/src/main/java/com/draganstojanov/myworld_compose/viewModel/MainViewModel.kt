@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.draganstojanov.myworld_compose.model.Country
+import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.repository.MyWorldRepository
 import com.draganstojanov.myworld_compose.util.INDEFINITE
 import com.draganstojanov.myworld_compose.util.constants.FilterEventType

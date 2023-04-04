@@ -29,7 +29,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
-import com.draganstojanov.myworld_compose.model.Country
+import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
 import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
