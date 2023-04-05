@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.draganstojanov.myworld_compose.screens.CountryDetailsScreen
-import com.draganstojanov.myworld_compose.screens.CountryListScreen
+import com.draganstojanov.myworld_compose.screens.countryDetails.CountryDetailsScreen
+import com.draganstojanov.myworld_compose.screens.countryList.CountryListScreen
 import com.draganstojanov.myworld_compose.screens.MainScreen
 import com.draganstojanov.myworld_compose.screens.MapScreen
 import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID

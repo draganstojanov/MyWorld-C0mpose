@@ -6,7 +6,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,11 +26,11 @@ fun MapScreen(
                 title = title,
                 navController = navController
             )
+        },
+        content = {
+            MapsView(mapUrl)
         }
-    ) {
-        MapsView(mapUrl)
-    }
-
+    )
 }
 
 @SuppressLint("SetJavaScriptEnabled")

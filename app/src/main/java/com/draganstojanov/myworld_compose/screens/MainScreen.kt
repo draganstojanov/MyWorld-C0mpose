@@ -46,17 +46,16 @@ fun MainScreen(
                     navController = navController,
                     hasBackButton = false
                 )
+            }, content = {
+                AllCountries(viewModel = viewModel) {
+                    var cList: String = Json.encodeToString(viewModel.filteredCountryList.value)
+                    cList = cList.replace("/", "*#=@*")
+                    navController.navigate(
+                        "${NavScreens.CountryListScreen.name}/${cList}/${it}"
+                    )
+                }
             }
-
-        ) {
-            AllCountries(viewModel = viewModel) {
-                var cList: String = Json.encodeToString(viewModel.filteredCountryList.value)
-                cList = cList.replace("/", "*#=@*")
-                navController.navigate(
-                    "${NavScreens.CountryListScreen.name}/${cList}/${it}"
-                )
-            }
-        }
+        )
     }
 }
 
