@@ -13,4 +13,12 @@
     <string name="borders">Borders</string>
     <string name="google_maps">Google Maps</string>
     <string name="open_street_maps">Open street maps</string>
+    <string name="capital">Capital</string>
+    <string name="area">Area</string>
+    <string name="population">Population</string>
+    <string name="languages">Languages</string>
+    <string name="currencies">Currencies</string>
+    <string name="code">code</string>
+    <string name="name">name</string>
+    <string name="symbol">symbol</string>
 </resources>

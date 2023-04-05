@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
-import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
+import com.draganstojanov.myworld_compose.composables.CustomTopAppBar
 import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.util.navigation.NavScreens
 import com.draganstojanov.myworld_compose.viewModel.CountryListViewModel

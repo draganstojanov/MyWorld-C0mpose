@@ -8,7 +8,6 @@ data class Country(
 
     val flag: String? = null,
     val name: Name? = null,
-  //  val altSpellings: List<String?>? = null,
 
     val flags: Flags? = null,
     val coatOfArms: CoatOfArms? = null,
@@ -19,16 +18,21 @@ data class Country(
     val borders: List<String?>? = null,
 
     val maps: Maps? = null,
-   // val latlng: List<Double?>? = null,
-
-
-
-
 
     val capital: List<String?>? = null,
-    val capitalInfo: CapitalInfo? = null,
     val area: Double? = null,
     val population: Int? = null,
+
+    val languages: Languages? = null,
+    val currencies: Currencies? = null,
+    val timezones: List<String?>? = null,
+
+    val independent: Boolean? = null,
+    val unMember: Boolean? = null,
+    val landlocked: Boolean? = null,
+
+
+
 
     val cca2: String? = null,
     val cca3: String? = null,
@@ -41,13 +45,8 @@ data class Country(
     val fifa: String? = null,
     val cioc: String? = null,
 
-    val independent: Boolean? = null,
-    val unMember: Boolean? = null,
-    val landlocked: Boolean? = null,
 
-    val gini: Gini? = null,
-    val currencies: Currencies? = null,
-    val languages: Languages? = null,
-    val timezones: List<String?>? = null,
+
+
 
     )

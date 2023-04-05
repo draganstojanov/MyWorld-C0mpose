@@ -4,9 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.draganstojanov.myworld_compose.model.main.Country
-import com.draganstojanov.myworld_compose.model.main.Native
-import com.draganstojanov.myworld_compose.model.main.NativeName
+import com.draganstojanov.myworld_compose.model.main.*
 import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID
 import com.draganstojanov.myworld_compose.util.Prefs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,6 +57,33 @@ class CountryDetailsViewModel @Inject constructor(
             borderList.add(borderText)
         }
         return borderList
+    }
+
+    fun getLanguageList(country: Country?): List<String?> {
+        val langList = mutableListOf<String>()
+        if (country?.languages != null) {
+            for (property in Languages::class.memberProperties) {
+                val lang = property.get(country.languages) as String?
+                if (!lang.isNullOrEmpty()) {
+                    langList.add(lang)
+                }
+            }
+        }
+        return langList
+    }
+
+    fun getCurrencyList(country: Country?): List<Currency?> {
+        val currencyList = mutableListOf<Currency?>()
+        if (country?.currencies != null) {
+        for (property in Currencies::class.memberProperties) {
+                val currency = property.get(country.currencies) as Currency?
+                if (currency != null) {
+                    currency.code = property.name
+                    currencyList.add(currency)
+                }
+            }
+        }
+        return currencyList
     }
 
 }

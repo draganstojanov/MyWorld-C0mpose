@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
-import com.draganstojanov.myworld_compose.elements.CustomTopAppBar
+import com.draganstojanov.myworld_compose.composables.CustomTopAppBar
 import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.model.main.Native
 import com.draganstojanov.myworld_compose.util.navigation.NavScreens
@@ -69,6 +69,7 @@ fun CountryDetails(
             { navController.navigate("${NavScreens.MapScreen.name}/${title}/${googleMaps}") },
             { navController.navigate("${NavScreens.MapScreen.name}/${title}/${openStreetMaps}") })
         GeoData(countryState, viewModel)
+        InfoData(countryState, viewModel )
     }
 }
 

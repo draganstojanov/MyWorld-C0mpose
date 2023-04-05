@@ -1,4 +1,4 @@
-package com.draganstojanov.myworld_compose.elements
+package com.draganstojanov.myworld_compose.composables
 
 import android.content.Context
 import android.widget.Toast

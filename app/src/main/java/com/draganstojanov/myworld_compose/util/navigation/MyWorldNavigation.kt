@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.draganstojanov.myworld_compose.screens.countryDetails.CountryDetailsScreen
-import com.draganstojanov.myworld_compose.screens.countryList.CountryListScreen
 import com.draganstojanov.myworld_compose.screens.MainScreen
 import com.draganstojanov.myworld_compose.screens.MapScreen
+import com.draganstojanov.myworld_compose.screens.countryDetails.CountryDetailsScreen
+import com.draganstojanov.myworld_compose.screens.countryList.CountryListScreen
 import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID
 import com.draganstojanov.myworld_compose.util.ARG_FILTERED_LIST
 import com.draganstojanov.myworld_compose.util.ARG_TITLE
@@ -60,8 +60,8 @@ fun MyWorldNavigation() {
         ) {
             MapScreen(
                 navController,
-                URLDecoder.decode(it.arguments?.getString(ARG_TITLE)),//TODO deprecated
-                URLDecoder.decode(it.arguments?.getString(ARG_URL))
+                URLDecoder.decode(it.arguments?.getString(ARG_TITLE), "UTF8"),
+                URLDecoder.decode(it.arguments?.getString(ARG_URL), "UTF8")
             )
         }
     }
