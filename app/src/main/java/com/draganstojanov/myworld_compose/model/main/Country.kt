@@ -19,10 +19,16 @@ data class Country(
     val borders: List<String?>? = null,
 
     val maps: Maps? = null,
-    val latlng: List<Double?>? = null,
+   // val latlng: List<Double?>? = null,
 
 
 
+
+
+    val capital: List<String?>? = null,
+    val capitalInfo: CapitalInfo? = null,
+    val area: Double? = null,
+    val population: Int? = null,
 
     val cca2: String? = null,
     val cca3: String? = null,
@@ -34,12 +40,6 @@ data class Country(
 
     val fifa: String? = null,
     val cioc: String? = null,
-
-    val capital: List<String?>? = null,
-    val capitalInfo: CapitalInfo? = null,
-    val area: Double? = null,
-    val population: Int? = null,
-
 
     val independent: Boolean? = null,
     val unMember: Boolean? = null,

@@ -15,4 +15,6 @@ val INDEFINITE = MyWorldApplication.instance.getString(R.string.indefinite)//TOD
 const val ARG_FILTERED_LIST = "argFilteredList"
 const val ARG_TITLE = "argTitle"
 const val ARG_COUNTRY_ID = "argCountryId"
+const val ARG_URL = "argUrl"
+
 

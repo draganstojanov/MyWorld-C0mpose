@@ -2,11 +2,14 @@ package com.draganstojanov.myworld_compose.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -29,7 +32,10 @@ import com.draganstojanov.myworld_compose.model.main.Native
 import com.draganstojanov.myworld_compose.ui.theme.colorGreyPrimary
 import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
+import com.draganstojanov.myworld_compose.util.navigation.NavScreens
 import com.draganstojanov.myworld_compose.viewModel.CountryDetailsViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -46,15 +52,21 @@ fun CountryDetailsScreen(
                 title = countryState.value?.name?.common,
                 navController = navController
             )
+        }, content = {
+            CountryDetails(
+                navController,
+                countryState,
+                nativeNamesState,
+                viewModel
+            )
         }
-    ) {
-        CountryDetails(countryState, nativeNamesState, viewModel)
-    }
+    )
 
 }
 
 @Composable
 fun CountryDetails(
+    navController: NavHostController,
     countryState: MutableState<Country?>,
     nativeNamesState: MutableState<List<Native>>,
     viewModel: CountryDetailsViewModel
@@ -66,9 +78,80 @@ fun CountryDetails(
     ) {
         NameBlock(countryState, nativeNamesState)
         FlagAndCoatOfArms(countryState)
+
+        val title = countryState.value?.name?.common.toString()
+        val googleMaps = URLEncoder.encode(countryState.value?.maps?.googleMaps.toString(), StandardCharsets.UTF_8.toString())
+        val openStreetMaps = URLEncoder.encode(countryState.value?.maps?.openStreetMaps.toString(), StandardCharsets.UTF_8.toString())
+
+        MapLinks(
+            { navController.navigate("${NavScreens.MapScreen.name}/${title}/${googleMaps}") },
+            { navController.navigate("${NavScreens.MapScreen.name}/${title}/${openStreetMaps}") })
         GeoData(countryState, viewModel)
     }
 }
+
+@Composable
+fun MapLinks(
+    googleMaps: () -> Unit,
+    openStreetMaps: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .clip(CircleShape)
+                .background(colorSecondary)
+                .clickable {
+                    googleMaps.invoke()
+                },
+        ) {
+            Text(
+                text = stringResource(id = R.string.google_maps),
+                modifier = Modifier.padding(
+                    vertical = 4.dp,
+                    horizontal = 12.dp
+                ),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = colorWhite,
+                    textAlign = TextAlign.Center,
+                )
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .clip(CircleShape)
+                .background(colorSecondary)
+                .clickable {
+                    openStreetMaps.invoke()
+                },
+        ) {
+            Text(
+                text = stringResource(id = R.string.open_street_maps),
+                modifier = Modifier.padding(
+                    vertical = 4.dp,
+                    horizontal = 12.dp
+                ),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = colorWhite,
+                    textAlign = TextAlign.Center,
+                )
+            )
+        }
+    }
+
+}
+
 
 @Composable
 fun GeoData(
@@ -93,8 +176,6 @@ fun GeoData(
 
             DataRowList(stringResource(id = R.string.borders), borderList)//todo lista flag+name
         }
-
-
     }
 }
 

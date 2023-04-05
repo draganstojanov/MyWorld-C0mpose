@@ -11,4 +11,6 @@
     <string name="subregion">Subregion</string>
     <string name="continent">Continent</string>
     <string name="borders">Borders</string>
+    <string name="google_maps">Google Maps</string>
+    <string name="open_street_maps">Open street maps</string>
 </resources>

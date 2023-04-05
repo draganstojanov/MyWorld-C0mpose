@@ -11,9 +11,12 @@ import androidx.navigation.navArgument
 import com.draganstojanov.myworld_compose.screens.CountryDetailsScreen
 import com.draganstojanov.myworld_compose.screens.CountryListScreen
 import com.draganstojanov.myworld_compose.screens.MainScreen
+import com.draganstojanov.myworld_compose.screens.MapScreen
 import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID
 import com.draganstojanov.myworld_compose.util.ARG_FILTERED_LIST
 import com.draganstojanov.myworld_compose.util.ARG_TITLE
+import com.draganstojanov.myworld_compose.util.ARG_URL
+import java.net.URLDecoder
 
 @Composable
 fun MyWorldNavigation() {
@@ -36,7 +39,6 @@ fun MyWorldNavigation() {
         ) {
             CountryListScreen(
                 navController,
-                //  it.arguments?.getString(ARG_FILTERED_LIST),
                 it.arguments?.getString(ARG_TITLE),
                 hiltViewModel()
             )
@@ -47,6 +49,20 @@ fun MyWorldNavigation() {
             arguments = listOf(navArgument(ARG_COUNTRY_ID) { type = NavType.IntType })
         ) {
             CountryDetailsScreen(navController, hiltViewModel())
+        }
+
+        composable(
+            "${NavScreens.MapScreen.name}/{$ARG_TITLE}/{$ARG_URL}",
+            arguments = listOf(
+                navArgument(ARG_TITLE) { type = NavType.StringType },
+                navArgument(ARG_URL) { type = NavType.StringType }
+            )
+        ) {
+            MapScreen(
+                navController,
+                URLDecoder.decode(it.arguments?.getString(ARG_TITLE)),//TODO deprecated
+                URLDecoder.decode(it.arguments?.getString(ARG_URL))
+            )
         }
     }
 }
