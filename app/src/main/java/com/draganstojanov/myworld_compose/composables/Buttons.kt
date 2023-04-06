@@ -1,4 +1,4 @@
-package com.draganstojanov.myworld_compose.elements
+package com.draganstojanov.myworld_compose.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

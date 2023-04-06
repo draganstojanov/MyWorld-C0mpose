@@ -3,7 +3,7 @@ package com.draganstojanov.myworld_compose.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.draganstojanov.myworld_compose.model.Country
+import com.draganstojanov.myworld_compose.model.main.Country
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

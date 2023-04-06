@@ -4,10 +4,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.draganstojanov.myworld_compose.model.Country
-import com.draganstojanov.myworld_compose.model.Name
-import com.draganstojanov.myworld_compose.model.Native
-import com.draganstojanov.myworld_compose.model.NativeName
+import com.draganstojanov.myworld_compose.model.main.Country
+import com.draganstojanov.myworld_compose.model.main.Name
+import com.draganstojanov.myworld_compose.model.main.Native
+import com.draganstojanov.myworld_compose.model.main.NativeName
 import com.draganstojanov.myworld_compose.util.ARG_FILTERED_LIST
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.serialization.decodeFromString
@@ -62,9 +62,11 @@ class CountryListViewModel @Inject constructor(
     fun getNativeNamesList(country: Country?) {
         val list = mutableListOf<Native>()
         for (property in NativeName::class.memberProperties) {
-            val native: Native? = property.get(country?.name?.nativeName!!) as Native?
-            if (native != null) {
-                list.add(native)
+            if (country?.name?.nativeName != null) {
+                val native: Native? = property.get(country.name.nativeName) as Native?
+                if (native != null) {
+                    list.add(native)
+                }
             }
         }
         nativeNamesList.value = list
