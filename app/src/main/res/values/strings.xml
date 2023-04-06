@@ -21,4 +21,18 @@
     <string name="code">code</string>
     <string name="name">name</string>
     <string name="symbol">symbol</string>
+    <string name="time_zones">Time zones</string>
+    <string name="independent">Independent</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="un_member">UN member</string>
+    <string name="landlocked">Landlocked</string>
+    <string name="cca2">Alpha 2 code</string>
+    <string name="cca3">Alpha 3 code</string>
+    <string name="ccn3">Numeric code</string>
+    <string name="tld">Domain</string>
+    <string name="calling_codes">Calling codes</string>
+    <string name="car_signs">Car signs</string>
+    <string name="fifa">FIFA</string>
+    <string name="ioc">IOC</string>
 </resources>

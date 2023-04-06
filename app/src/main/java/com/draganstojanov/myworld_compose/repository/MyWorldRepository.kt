@@ -28,12 +28,16 @@ class MyWorldRepository @Inject constructor(
 
                     //TODO TEST
                     countries.forEach { country: Country ->
-                        if (country.currencies != null) {
-                           // if (country.currencies!=null) {
-                                debugLog("CAPITAL-XXX", country.name?.common)
-                          //      debugLog("XXX", country.curr)
-                         //   }
-                        }else{ debugLog("CAPITAL-NULL", country.name?.common)}
+                        if (country.idd != null) {
+                            if (country.idd.suffixes != null) {
+                                if (country.idd.suffixes.size > 1) {
+                                    debugLog("SUFFIX-CO", country.name?.common)
+                                    debugLog("SUFFIX-XX", country.idd.suffixes)
+                                }else {
+                                   // debugLog("SUFFIX-SI", country.idd.suffixes)
+                                }
+                            }
+                        }
                     }
 
 

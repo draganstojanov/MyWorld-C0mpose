@@ -31,22 +31,16 @@ data class Country(
     val unMember: Boolean? = null,
     val landlocked: Boolean? = null,
 
-
-
-
     val cca2: String? = null,
     val cca3: String? = null,
     val ccn3: String? = null,
 
-    val car: Car? = null,
-    val idd: Idd? = null,
     val tld: List<String?>? = null,
+    val idd: Idd? = null,
 
+    val car: Car? = null,
     val fifa: String? = null,
     val cioc: String? = null,
-
-
-
 
 
     )
