@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
 }
 
 @Suppress("UnstableApiUsage")
@@ -48,14 +48,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.4"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
 
-//    fun Packaging.() {
-//        resources {
-//            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
-//        }
-//    }
 }
 
 
@@ -64,14 +59,13 @@ dependencies {
     val composeVersion = "1.4.1"
     val lifecycleVersion = "2.6.1"
     val coroutinesVersion = "1.6.4"
-    val hiltVersion = "2.45"
+    val hiltVersion = "2.46"
     val retrofitVersion = "2.9.0"
     val roomVersion = "2.5.1"
-    val kotlinVersion = "1.8.10"
     val materialVersion = "1.4.1"
 
     implementation("androidx.core:core-ktx:1.10.0")
-    implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("androidx.activity:activity-compose:1.7.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
@@ -106,7 +100,7 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9")
 
     // Room
