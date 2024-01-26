@@ -1,4 +1,4 @@
-package com.draganstojanov.myworld_compose.util
+package com.draganstojanov.myworld_compose.util.constants
 
 import com.draganstojanov.myworld_compose.MyWorldApplication
 import com.draganstojanov.myworld_compose.R

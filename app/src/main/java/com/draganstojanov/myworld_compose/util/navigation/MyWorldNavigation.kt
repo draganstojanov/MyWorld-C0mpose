@@ -12,10 +12,10 @@ import com.draganstojanov.myworld_compose.screens.MainScreen
 import com.draganstojanov.myworld_compose.screens.MapScreen
 import com.draganstojanov.myworld_compose.screens.countryDetails.CountryDetailsScreen
 import com.draganstojanov.myworld_compose.screens.countryList.CountryListScreen
-import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID
-import com.draganstojanov.myworld_compose.util.ARG_FILTERED_LIST
-import com.draganstojanov.myworld_compose.util.ARG_TITLE
-import com.draganstojanov.myworld_compose.util.ARG_URL
+import com.draganstojanov.myworld_compose.util.constants.ARG_COUNTRY_ID
+import com.draganstojanov.myworld_compose.util.constants.ARG_FILTERED_LIST
+import com.draganstojanov.myworld_compose.util.constants.ARG_TITLE
+import com.draganstojanov.myworld_compose.util.constants.ARG_URL
 import java.net.URLDecoder
 
 @Composable

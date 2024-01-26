@@ -1,8 +1,8 @@
 package com.draganstojanov.myworld_compose.util.di
 
 import android.content.Context
-import com.draganstojanov.myworld_compose.util.BASE_URL
-import com.draganstojanov.myworld_compose.util.VALUE_APPLICATION_JSON
+import com.draganstojanov.myworld_compose.util.constants.BASE_URL
+import com.draganstojanov.myworld_compose.util.constants.VALUE_APPLICATION_JSON
 import com.draganstojanov.myworld_compose.util.network.api.MyWorldApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module

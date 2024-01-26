@@ -150,7 +150,7 @@ fun MainScreenCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Center,
         ) {
             for (item in list) {

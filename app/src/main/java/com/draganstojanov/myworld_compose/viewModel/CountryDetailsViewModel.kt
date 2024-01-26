@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.draganstojanov.myworld_compose.model.main.*
-import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID
+import com.draganstojanov.myworld_compose.util.constants.ARG_COUNTRY_ID
 import com.draganstojanov.myworld_compose.util.Prefs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

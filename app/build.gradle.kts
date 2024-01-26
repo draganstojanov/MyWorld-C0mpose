@@ -1,24 +1,22 @@
-import com.android.build.api.dsl.Packaging
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+ //   id("com.google.devtools.ksp")
 }
 
-@Suppress("UnstableApiUsage")
 android {
     namespace = "com.draganstojanov.myworld_compose"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.draganstojanov.myworld_compose"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0.0"
+        targetSdk = 34
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -35,12 +33,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "19"
     }
 
     buildFeatures {
@@ -48,7 +46,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
 
 }
@@ -56,18 +54,18 @@ android {
 
 dependencies {
 
-    val composeVersion = "1.4.1"
-    val lifecycleVersion = "2.6.1"
-    val coroutinesVersion = "1.6.4"
-    val hiltVersion = "2.46"
+    val composeVersion = "1.6.0"
+    val lifecycleVersion = "2.7.0"
+    val coroutinesVersion = "1.7.3"
+    val hiltVersion = "2.50"
     val retrofitVersion = "2.9.0"
-    val roomVersion = "2.5.1"
-    val materialVersion = "1.4.1"
+    val roomVersion = "2.6.1"
+    val materialVersion = "1.6.0"
 
-    implementation("androidx.core:core-ktx:1.10.0")
-    implementation("androidx.activity:activity-compose:1.7.1")
-    implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
     implementation("androidx.compose.ui:ui:$composeVersion")
@@ -78,10 +76,10 @@ dependencies {
     //Material icons - use with caution!
     //  implementation("androidx.compose.material:material-icons-extended:$materialVersion")
 
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
     // Kotlin
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     implementation(kotlin("reflect"))
 
     //Coroutines
@@ -96,20 +94,21 @@ dependencies {
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
 
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+   kapt("androidx.room:room-compiler:$roomVersion")
+ //   ksp("androidx.room:room-compiler:$roomVersion")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.3.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
