@@ -42,5 +42,4 @@ data class Country(
     val fifa: String? = null,
     val cioc: String? = null,
 
-
     )

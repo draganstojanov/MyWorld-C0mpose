@@ -36,5 +36,4 @@ class Prefs(private val context: Context) {
     fun lastTimestampCheck(): Boolean = (System.currentTimeMillis() - sharedPreferences.getLong(PREF_LAST_TIMESTAMP, 0L)) > TIMESTAMP_GAP
 
 
-
 }

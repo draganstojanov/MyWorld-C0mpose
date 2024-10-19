@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.repository.MyWorldRepository
-import com.draganstojanov.myworld_compose.util.INDEFINITE
+import com.draganstojanov.myworld_compose.util.constants.INDEFINITE
 import com.draganstojanov.myworld_compose.util.constants.FilterEventType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

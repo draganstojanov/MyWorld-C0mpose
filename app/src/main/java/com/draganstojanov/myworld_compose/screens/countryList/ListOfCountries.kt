@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -78,7 +78,7 @@ fun CountryItem(
         Text(
             text = country.name?.common.toString(),
             color = colorWhite,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(top = 12.dp)
                 .constrainAs(name) {
@@ -103,7 +103,7 @@ fun CountryItem(
                 Text(
                     text = nativeNamesList.value[it].common.toString(),
                     color = colorWhite,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }

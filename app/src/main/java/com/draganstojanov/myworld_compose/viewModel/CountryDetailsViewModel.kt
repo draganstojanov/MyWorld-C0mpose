@@ -4,9 +4,15 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.draganstojanov.myworld_compose.model.main.*
-import com.draganstojanov.myworld_compose.util.ARG_COUNTRY_ID
+import androidx.navigation.toRoute
+import com.draganstojanov.myworld_compose.model.main.Country
+import com.draganstojanov.myworld_compose.model.main.Currencies
+import com.draganstojanov.myworld_compose.model.main.Currency
+import com.draganstojanov.myworld_compose.model.main.Languages
+import com.draganstojanov.myworld_compose.model.main.Native
+import com.draganstojanov.myworld_compose.model.main.NativeName
 import com.draganstojanov.myworld_compose.util.Prefs
+import com.draganstojanov.myworld_compose.util.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.reflect.full.memberProperties
@@ -28,7 +34,7 @@ class CountryDetailsViewModel @Inject constructor(
     }
 
     private fun getCountry() {
-        val countryId: Int? = savedStateHandle[ARG_COUNTRY_ID]
+        val countryId: Int? = savedStateHandle.toRoute<Screen.CountryDetailsScreen>().countryId
         val countries = prefs.getAllCountries()
         val country = countries.firstOrNull { it.countryId == countryId }
         countryState.value = country
@@ -75,7 +81,7 @@ class CountryDetailsViewModel @Inject constructor(
     fun getCurrencyList(country: Country?): List<Currency?> {
         val currencyList = mutableListOf<Currency?>()
         if (country?.currencies != null) {
-        for (property in Currencies::class.memberProperties) {
+            for (property in Currencies::class.memberProperties) {
                 val currency = property.get(country.currencies) as Currency?
                 if (currency != null) {
                     currency.code = property.name

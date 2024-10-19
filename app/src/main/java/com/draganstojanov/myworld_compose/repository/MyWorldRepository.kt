@@ -2,13 +2,12 @@ package com.draganstojanov.myworld_compose.repository
 
 import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.util.Prefs
-import com.draganstojanov.myworld_compose.util.debug.debugLog
 import com.draganstojanov.myworld_compose.util.network.ResponseParser
 import com.draganstojanov.myworld_compose.util.network.ResponseState
 import com.draganstojanov.myworld_compose.util.network.api.MyWorldApi
 import javax.inject.Inject
 
-class MyWorldRepository @Inject constructor(
+class MyWorldRepository(
     private val myWorldApi: MyWorldApi,
     private val prefs: Prefs
 ) : ResponseParser() {
@@ -25,32 +24,13 @@ class MyWorldRepository @Inject constructor(
                         country.countryId = index + 1
                     }
 
-
-                    //TODO TEST
-                    countries.forEach { country: Country ->
-                        if (country.idd != null) {
-                            if (country.idd.suffixes != null) {
-                                if (country.idd.suffixes.size > 1) {
-                                    debugLog("SUFFIX-CO", country.name?.common)
-                                    debugLog("SUFFIX-XX", country.idd.suffixes)
-                                }else {
-                                   // debugLog("SUFFIX-SI", country.idd.suffixes)
-                                }
-                            }
-                        }
-                    }
-
-
-
-
-
-
                     prefs.apply {
                         saveAllCountries(countries)
                         saveLastTimestamp()
                     }
                     countries
                 }
+
                 is ResponseState.Error -> prefs.getAllCountries()
             }
 

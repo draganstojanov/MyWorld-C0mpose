@@ -2,16 +2,18 @@ package com.draganstojanov.myworld_compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import com.draganstojanov.myworld_compose.ui.theme.MyWorldComposeTheme
 import com.draganstojanov.myworld_compose.ui.theme.colorPrimary
 import com.draganstojanov.myworld_compose.util.navigation.MyWorldNavigation
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import java.security.CryptoPrimitive
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -20,14 +22,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyWorldComposeTheme {
 
-                val systemUiController = rememberSystemUiController()
-                SideEffect {
-                    systemUiController.setStatusBarColor(
-                        color = colorPrimary,
-                        darkIcons = false
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(
+                        colorPrimary.toArgb(),
+                        colorPrimary.toArgb()
+                    ),
+                    navigationBarStyle = SystemBarStyle.auto(
+                        colorPrimary.toArgb(),
+                        colorPrimary.toArgb()
                     )
-                }
+                )
 
+                window.apply {
+                    WindowCompat.getInsetsController(this, this.decorView).apply {
+                        isAppearanceLightStatusBars = false
+                        isAppearanceLightNavigationBars = false
+                    }
+                }
                 MyWorldNavigation()
             }
         }

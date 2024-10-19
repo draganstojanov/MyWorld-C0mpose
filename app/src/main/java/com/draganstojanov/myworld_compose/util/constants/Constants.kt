@@ -1,4 +1,4 @@
-package com.draganstojanov.myworld_compose.util
+package com.draganstojanov.myworld_compose.util.constants
 
 import com.draganstojanov.myworld_compose.MyWorldApplication
 import com.draganstojanov.myworld_compose.R
@@ -11,10 +11,6 @@ const val GET_ALL = "all"
 //Lists
 val INDEFINITE = MyWorldApplication.instance.getString(R.string.indefinite)//TODO nije dobro
 
-// Navigation bundle
-const val ARG_FILTERED_LIST = "argFilteredList"
-const val ARG_TITLE = "argTitle"
-const val ARG_COUNTRY_ID = "argCountryId"
-const val ARG_URL = "argUrl"
+
 
 

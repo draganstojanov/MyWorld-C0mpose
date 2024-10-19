@@ -1,4 +1,5 @@
 package com.draganstojanov.myworld_compose.model.main
+
 @kotlinx.serialization.Serializable
 data class NativeName(
     val fra: Native? = null,

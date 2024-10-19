@@ -1,6 +1,7 @@
 package com.draganstojanov.myworld_compose.model.main
 
 import kotlinx.serialization.SerialName
+
 @kotlinx.serialization.Serializable
 data class Gini(
     @SerialName("2011")
