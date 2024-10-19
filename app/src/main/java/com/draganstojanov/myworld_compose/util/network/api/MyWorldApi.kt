@@ -10,5 +10,4 @@ interface MyWorldApi {
     @GET(GET_ALL)
     suspend fun getAllCountries(): Response<List<Country>>
 
-
 }

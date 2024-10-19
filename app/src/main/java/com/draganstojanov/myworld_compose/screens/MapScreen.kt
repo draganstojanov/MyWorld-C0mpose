@@ -5,40 +5,46 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.composables.CustomTopAppBar
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MapScreen(
-    navController: NavHostController,
     title: String?,
-    mapUrl: String?
+    mapUrl: String?,
+    onBackPressed: () -> Unit
 ) {
     Scaffold(
         topBar = {
             CustomTopAppBar(
                 title = title,
-                navController = navController
+                onBackPressed = { onBackPressed() }
             )
-        },
-        content = {
-            MapsView(mapUrl)
         }
-    )
+    ) {
+        MapsView(
+            contentPadding = it,
+            mapUrl
+        )
+    }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun MapsView(mapUrl: String?) {
-
+fun MapsView(
+    contentPadding: PaddingValues,
+    mapUrl: String?
+) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
     ) {
         AndroidView(factory = {
             WebView(it).apply {
@@ -54,6 +60,5 @@ fun MapsView(mapUrl: String?) {
             it.loadUrl(mapUrl.toString())
         })
     }
-
 
 }

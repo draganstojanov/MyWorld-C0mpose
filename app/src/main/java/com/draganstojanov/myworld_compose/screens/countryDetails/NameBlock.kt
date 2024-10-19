@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -34,31 +34,31 @@ fun NameBlock(countryState: MutableState<Country?>, nativeNamesState: MutableSta
         Text(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
             text = countryState.value?.name?.common.toString(),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.titleMedium,
             color = colorWhite,
         )
         Text(
             modifier = Modifier.padding(horizontal = 12.dp),
             text = countryState.value?.name?.official.toString(),
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyMedium,
             color = colorWhite,
         )
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             thickness = 1.dp,
-            color = colorGreyPrimary,
+            color = colorGreyPrimary
         )
         repeat(nativeNamesState.value.size) {
             Text(
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 4.dp),
                 text = nativeNamesState.value[it].common.toString(),
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleSmall,
                 color = colorWhite,
             )
             Text(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 text = nativeNamesState.value[it].official.toString(),
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodySmall,
                 color = colorWhite,
             )
         }

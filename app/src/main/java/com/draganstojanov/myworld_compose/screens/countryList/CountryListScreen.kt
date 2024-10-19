@@ -1,24 +1,28 @@
 package com.draganstojanov.myworld_compose.screens.countryList
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.navigation.NavHostController
 import com.draganstojanov.myworld_compose.R
 import com.draganstojanov.myworld_compose.composables.CustomTopAppBar
 import com.draganstojanov.myworld_compose.model.main.Country
-import com.draganstojanov.myworld_compose.util.navigation.NavScreens
 import com.draganstojanov.myworld_compose.viewModel.CountryListViewModel
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CountryListScreen(
-    navController: NavHostController,
     title: String?,
-    viewModel: CountryListViewModel
+    viewModel: CountryListViewModel,
+    onCountryDetails: (Int) -> Unit,
+    onBackPressed: () -> Unit
 ) {
     val countryList = viewModel.searchFilteredList
 
@@ -26,21 +30,23 @@ fun CountryListScreen(
         topBar = {
             CustomTopAppBar(
                 title = title,
-                navController = navController
+                onBackPressed = { onBackPressed() }
             )
-        }, content = {
-            CountriesListLayout(
-                viewModel = viewModel,
-                countryList = countryList
-            ) {
-                navController.navigate("${NavScreens.CountryDetailsScreen.name}/${it}")
-            }
         }
-    )
+    ) {
+        CountriesListLayout(
+            paddingValues = it,
+            viewModel = viewModel,
+            countryList = countryList
+        ) {
+            onCountryDetails(it)
+        }
+    }
 }
 
 @Composable
 fun CountriesListLayout(
+    paddingValues: PaddingValues,
     viewModel: CountryListViewModel,
     countryList: MutableState<List<Country>>,
     onCountrySelected: (Int) -> Unit,
@@ -48,7 +54,12 @@ fun CountriesListLayout(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+            .padding(
+                start = dimensionResource(id = R.dimen.padding_horizontal),
+                end = dimensionResource(id = R.dimen.padding_horizontal),
+                top = paddingValues.calculateTopPadding(),
+                bottom = paddingValues.calculateBottomPadding()
+            )
     ) {
         SearchTextField(viewModel = viewModel)
         ListOfCountries(viewModel, countryList, onCountrySelected)

@@ -7,7 +7,7 @@ import com.draganstojanov.myworld_compose.util.network.ResponseState
 import com.draganstojanov.myworld_compose.util.network.api.MyWorldApi
 import javax.inject.Inject
 
-class MyWorldRepository @Inject constructor(
+class MyWorldRepository(
     private val myWorldApi: MyWorldApi,
     private val prefs: Prefs
 ) : ResponseParser() {

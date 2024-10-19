@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -26,7 +29,6 @@ import com.draganstojanov.myworld_compose.ui.theme.colorSecondary
 import com.draganstojanov.myworld_compose.ui.theme.colorWhite
 import com.draganstojanov.myworld_compose.viewModel.CountryListViewModel
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTextField(viewModel: CountryListViewModel) {
     val inputValue = remember { mutableStateOf(TextFieldValue()) }
@@ -63,17 +65,17 @@ fun SearchTextField(viewModel: CountryListViewModel) {
                 }
             },
             shape = CircleShape,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = colorPrimary,
-                trailingIconColor = colorPrimary,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = colorPrimary,
+                focusedTrailingIconColor = colorPrimary,
                 cursorColor = colorSecondary,
-                backgroundColor = colorWhite,
-                focusedIndicatorColor = colorPrimary,
-                unfocusedIndicatorColor = colorPrimary,
+                focusedContainerColor = colorWhite,
                 focusedLabelColor = colorSecondary,
                 unfocusedLabelColor = colorSecondary,
-                placeholderColor = colorSecondary
+                focusedPlaceholderColor = colorSecondary,
+                focusedBorderColor = colorPrimary
             )
         )
     }
 }
+

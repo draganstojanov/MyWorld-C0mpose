@@ -4,7 +4,6 @@ import android.content.Context
 import com.draganstojanov.myworld_compose.util.constants.BASE_URL
 import com.draganstojanov.myworld_compose.util.constants.VALUE_APPLICATION_JSON
 import com.draganstojanov.myworld_compose.util.network.api.MyWorldApi
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +15,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -41,7 +41,6 @@ object NetworkModule {
         ignoreUnknownKeys = true
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private fun retrofit(context: Context): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)

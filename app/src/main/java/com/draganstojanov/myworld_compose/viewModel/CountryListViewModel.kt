@@ -4,13 +4,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.navigation.toRoute
 import com.draganstojanov.myworld_compose.model.main.Country
 import com.draganstojanov.myworld_compose.model.main.Name
 import com.draganstojanov.myworld_compose.model.main.Native
 import com.draganstojanov.myworld_compose.model.main.NativeName
-import com.draganstojanov.myworld_compose.util.constants.ARG_FILTERED_LIST
+import com.draganstojanov.myworld_compose.util.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import kotlin.reflect.full.memberProperties
@@ -29,7 +29,7 @@ class CountryListViewModel @Inject constructor(
     }
 
     private fun setFilteredList() {
-        val argList: String? = savedStateHandle[ARG_FILTERED_LIST]
+        val argList: String? = savedStateHandle.toRoute<Screen.CountryListScreen>().filteredList
         val fl = argList?.replace("*#=@*", "/")
         filteredCountryList = Json.decodeFromString(fl.toString())
         searchFilter("")
